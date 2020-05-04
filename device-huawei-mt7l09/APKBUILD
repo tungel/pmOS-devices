@@ -1,0 +1,25 @@
+# Contributor: Tung Le <tuxlix@gmail.com>
+# Maintainer: Tung Le <tuxlix@gmail.com>
+# Reference: <https://postmarketos.org/devicepkg>
+pkgname="device-huawei-mt7l09"
+pkgdesc="Huawei Ascend Mate 7"
+pkgver=0.1
+pkgrel=0
+url="https://postmarketos.org"
+license="MIT"
+arch="armv7"
+options="!check !archcheck"
+depends="postmarketos-base linux-huawei-mt7l09 mkbootimg mesa-dri-swrast"
+makedepends="devicepkg-dev"
+source="deviceinfo"
+
+build() {
+	devicepkg_build $startdir $pkgname
+}
+
+package() {
+	devicepkg_package $startdir $pkgname
+}
+
+
+sha512sums="a3c8eabcf16f136f508ae29a043fe9ddede7570c7093dbcd404c9f54a02e93946c06755a4a56ba494397833af10a616d93ae48ae3183b0430ba2e47116f2f1e3  deviceinfo"

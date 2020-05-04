@@ -1,0 +1,13 @@
+diff --git a/Makefile b/Makefile
+index dba6d500..9fac6e93 100755
+--- a/Makefile
++++ b/Makefile
+@@ -424,7 +424,7 @@ KBUILD_CPPFLAGS += -DDRV_BUILD_SEPARATE
+ endif
+ OBB_PRODUCT_NAME = hi3630_udp
+ ifneq ($(findstring hi3630, $(OBB_PRODUCT_NAME) ),)
+-BALONG_TOPDIR = $(CURDIR)/../kernel/drivers/vendor/hisi
++BALONG_TOPDIR = $(srctree)/drivers/vendor/hisi
+ OBB_PRODUCT_NAME = hi3630_udp
+ CFG_PLATFORM = hi3630
+ TARGET_ARM_TYPE = arm

@@ -1,0 +1,73 @@
+# Contributor: Tung Le <tuxlix@gmail.com>
+# Maintainer: Tung Le <tuxlix@gmail.com>
+# Reference: <https://postmarketos.org/vendorkernel>
+# Kernel config based on: arch/arm/configs/merge_hi3630_defconfig
+
+pkgname="linux-huawei-mt7l09"
+# pkgver=3.10.86
+pkgrel=0
+pkgdesc="Huawei Ascend Mate 7 kernel fork"
+arch="armv7"
+_carch="arm"
+_flavor="huawei-mt7l09"
+url="https://kernel.org"
+license="GPL-2.0-only"
+options="!strip !check !tracedeps"
+makedepends="bash bc bison devicepkg-dev flex openssl-dev perl xz unzip linux-headers"
+
+# Source
+_repository="android_kernel_huawei_mt7l09"
+
+# pkgver=3.10.86
+# _commit="28643aa860bda79b6b5909f36621592180fcbbd8"
+
+# adapted
+pkgver=3.10.86
+_commit="34b464fb71cdd69d718011c2e6624efe7913b329"
+
+# adapted
+# pkgver=3.10.30
+# _commit="3690a5067d6218ac820dc629bb62b1657951db09"
+
+_config="config-$_flavor.$arch"
+source="
+	$pkgname-$_commit.tar.gz::https://github.com/mt7-dev/$_repository/archive/$_commit.tar.gz
+	$_config
+	gcc7-give-up-on-ilog2-const-optimizations.patch
+	gcc8-fix-put-user.patch
+    ttl03.patch
+    ttl04.patch
+    ttl05.patch
+    ttl06.patch
+"
+# patch3 ref: https://forum.xda-developers.com/android/development/rom-huawei-p8-fromfuture-1-0-t3175436/page23
+#
+    # ttl02.patch
+    # ttl01.patch
+	# kernel-use-the-gnu89-standard-explicitly.patch
+builddir="$srcdir/$_repository-$_commit"
+_outdir="out"
+
+prepare() {
+	default_prepare
+	. downstreamkernel_prepare
+}
+
+build() {
+	unset LDFLAGS
+	make O="$_outdir" ARCH="$_carch" CC="${CC:-gcc}" \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-postmarketOS"
+}
+
+package() {
+	downstreamkernel_package "$builddir" "$pkgdir" "$_carch" "$_flavor" "$_outdir"
+}
+
+sha512sums="28f6406fbdeec51c1f4e8eea420113afd5a996e9cc4369d6735b382534b17d63889449122e6050ef1d805ff54dcfa78086a0cdb7e537bdda5b55273f2c9659a5  linux-huawei-mt7l09-34b464fb71cdd69d718011c2e6624efe7913b329.tar.gz
+af939b75c17055d1ff9d919cb0d8e4e9e9d52a4e3d33f31cf20477363ff166b61d8c499fc0a70c8f326cc685d47cb9df31654b9f5e81c06376c35e1d5bdefaf9  config-huawei-mt7l09.armv7
+77eba606a71eafb36c32e9c5fe5e77f5e4746caac292440d9fb720763d766074a964db1c12bc76fe583c5d1a5c864219c59941f5e53adad182dbc70bf2bc14a7  gcc7-give-up-on-ilog2-const-optimizations.patch
+197d40a214ada87fcb2dfc0ae4911704b9a93354b75179cd6b4aadbb627a37ec262cf516921c84a8b1806809b70a7b440cdc8310a4a55fca5d2c0baa988e3967  gcc8-fix-put-user.patch
+3d71a686f9c0219c4fa9747ac6158284882185945ab4dc27e5bf913483f2e95e7a5baeaf7d9ea1112cabfd89a766141c1160493280741b492771d03d4d52ad63  ttl03.patch
+c8c2ce3eec14c74e086fca1d3ab8d8bbc0db1b62bd3519b2d1bdb460e93e612b03a36156fe8c835bb762f82f39587dcaf910b2e01971cecc9bce68ae599038da  ttl04.patch
+1e9d1ea0e93e6f43aeea42ce0c2ee09ce284a561c5b89a2354eb04a0696e1f4bd95d89c223d7d0f470ce546bc3ca9b03267daac8ac449e9f9bd738563e05061f  ttl05.patch
+cbf453b5cb32b344d3f99f714b1e82a5ea2124928d2c876e28a7ef09b44f9969bc5897297689b431b2a358ce2d56838467be769526059cb97aa6dc3a93889a58  ttl06.patch"

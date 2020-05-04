@@ -1,0 +1,13 @@
+diff --git a/scripts/Makefile.build b/scripts/Makefile.build
+index 9baac70..e437d98 100644
+--- a/scripts/Makefile.build
++++ b/scripts/Makefile.build
+@@ -101,7 +101,7 @@ endif
+ KBUILD_CFLAGS += $(warning)
+ endif
+ 
+-include scripts/Makefile.lib
++#include scripts/Makefile.lib
+ 
+ ifdef host-progs
+ ifneq ($(hostprogs-y),$(host-progs))

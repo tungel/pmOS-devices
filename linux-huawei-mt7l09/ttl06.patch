@@ -1,0 +1,13 @@
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 005df6c4..3bf50c83 100755
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -74,7 +74,7 @@
+ #include <linux/binfmts.h>
+ #include <linux/context_tracking.h>
+ #ifdef CONFIG_HUAWEI_MSG_POLICY
+-#include <huawei_platform/power/msgnotify.h>
++#include <../../../../include/huawei_platform/power/msgnotify.h>
+ #endif
+ #include <asm/switch_to.h>
+ #include <asm/tlb.h>

@@ -1,0 +1,13 @@
+diff --git a/Makefile b/Makefile
+index 9fac6e9..36bed56 100755
+--- a/Makefile
++++ b/Makefile
+@@ -360,7 +360,7 @@ USERINCLUDE    := \
+ 
+ # Use LINUXINCLUDE when you must reference the include/ directory.
+ # Needed to be compatible with the O= option
+-COMMON_HEAD := $(CURDIR)/../kernel/drivers/
++COMMON_HEAD := $(srctree)/drivers/
+ ifneq ($(COMMON_HEAD),)
+ BALONG_INC := $(patsubst %,-I%,$(COMMON_HEAD))
+ endif
